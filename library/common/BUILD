@@ -11,14 +11,3 @@ envoy_cc_library(
     repository = "@envoy",
     deps = ["@envoy//source/exe:envoy_main_common_lib"],
 )
-
-cc_library(
-    name = "envoy_jni_interface_lib",
-    srcs = ["jni_interface.cc"],
-    copts = ["-std=c++14"],
-    linkopts = [
-        "-lm",
-        "-llog",
-    ],
-    deps = [":envoy_main_interface_lib"],
-)

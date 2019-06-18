@@ -30,30 +30,9 @@ touch $@
 
 aar_with_jni(
     name = "android_aar",
-    android_library = "android_lib",
+    android_library = "//library/kotlin/io/envoyproxy/envoymobile:android_lib",
     archive_name = "envoy",
     visibility = ["//visibility:public"],
-)
-
-# Work around for transtive dependencies related to not including cc_libraries for kt_jvm_library
-# Related to: https://github.com/bazelbuild/rules_kotlin/issues/132
-#
-# This work around is to use an empty java_library to include the cc_library dependencies needed
-# for the kotlin jni layer
-android_library(
-    name = "java_cc_alias",
-    srcs = ["library/kotlin/io/envoyproxy/envoymobile/EnovyKotlinEmptyClass.java"],
-    custom_package = "io.envoyproxy.envoymobile",
-    manifest = "library/EnvoyManifest.xml",
-    deps = ["//library/common:envoy_jni_interface_lib"],
-)
-
-kt_android_library(
-    name = "android_lib",
-    srcs = ["library/kotlin/io/envoyproxy/envoymobile/Envoy.kt"],
-    custom_package = "io.envoyproxy.envoymobile",
-    manifest = "library/EnvoyManifest.xml",
-    deps = ["java_cc_alias"],
 )
 
 genrule(
